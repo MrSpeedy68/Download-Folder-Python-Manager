@@ -1,7 +1,5 @@
 import os
 import time
-import logging
-import fnmatch
 import shutil
 import shortuuid
 from watchdog.observers import Observer
@@ -45,7 +43,6 @@ def match_file(source_dest):
                     move(source_dest, dest_dir_3dprint,entry.name)
 
 
-
 class OnMyWatch:
 
     source_dest = "/Users/mrspe/Downloads/"
@@ -77,7 +74,7 @@ class Handler(FileSystemEventHandler):
             match_file(OnMyWatch.source_dest)
         elif event.event_type == 'modified':
             print("Something Modified")
-                        
+    
 
 if __name__ == "__main__":
     watch = OnMyWatch()

@@ -6,7 +6,8 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from configparser import ConfigParser
 
-file = 'config.ini' #Read in config file directories
+realpath_dir = os.path.dirname(os.path.realpath(__file__))
+file = realpath_dir + "\config.ini" #Read in config file directories
 config = ConfigParser()
 config.read(file)
 
@@ -64,7 +65,7 @@ class OnMyWatch:
                 time.sleep(5)
         except:
             self.observer.stop()
-            print("Observer Stopped")
+            #print("Observer Stopped")
 
         self.observer.join()
 

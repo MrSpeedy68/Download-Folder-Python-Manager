@@ -4,12 +4,17 @@ import shutil
 import shortuuid
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from configparser import ConfigParser
 
-dest_dir_image = "/Users/mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded Images/"
-dest_dir_video = "/Users\mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded Videos/"
-dest_dir_3dprint = "/Users/mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded STLs/"
-dest_dir_document = "/Users/mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded Documents/"
-dest_dir_music = "/Users/mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded Music/"
+file = 'config.ini' #Read in config file directories
+config = ConfigParser()
+config.read(file)
+
+dest_dir_image = config['destination']['images']
+dest_dir_video = config['destination']['videos']
+dest_dir_3dprint = config['destination']['3dprints']
+dest_dir_document = config['destination']['documents']
+dest_dir_music = config['destination']['music']
 
 image_extension = ('.jpg', '.png', '.gif', '.webp', '.tiff', '.tif', '.psd', '.raw', '.bmp', '.heif', '.indd', 'jpeg', '.jpe', '.jif', '.jfif', '.jfi', '.jp2', '.svg', '.svgz', '.ai', '.eps')
 video_extensions = ('.mp4', '.mov', '.wmv', '.avi', '.avichd', '.flv', '.flv4', '.swf', '.mkv', '.webm')
@@ -45,7 +50,7 @@ def match_file(source_dest):
 
 class OnMyWatch:
 
-    source_dest = "/Users/mrspe/Downloads/"
+    source_dest = config['source']['src']
 
     def __init__(self):
         self.observer = Observer()
@@ -70,11 +75,8 @@ class Handler(FileSystemEventHandler):
         if event.is_directory:
             return None
         
-        elif event.event_type == 'created':
+        elif event.event_type == 'created' or event.event_type == 'modified':
             match_file(OnMyWatch.source_dest)
-        elif event.event_type == 'modified':
-            print("Something Modified")
-    
 
 if __name__ == "__main__":
     watch = OnMyWatch()

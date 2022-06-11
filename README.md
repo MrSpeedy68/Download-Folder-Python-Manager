@@ -1,31 +1,63 @@
 # Download-Folder-Python-Manager
- A script to monitor and manage your downloads folder and to place all newly downloaded files into sub folders to sort files by file types like documents, images, videos etc.
+A script to monitor and manage your downloads folder and to place all newly downloaded files into sub folders to sort files by file types like documents, images, videos etc.
 
- This was created for my specific needs and will be updated to how I wish to structure my files. I have made it easy for anyone to change how they wish to structure their files, all you need to do is change your corressponding directories and add file extensions that you wish to sort into that file.
+This was created for my specific needs and will be updated to how I wish to structure my files. I have made it easy for anyone to change how they wish to structure their files, all you need to do is change your corressponding directories and add file extensions that you wish to sort into that file.
 
- ### Pip Installs required
- - shutil
- - watchdog
- - shortuuid
+### Pip Installs required
+- shutil
+- watchdog
+- shortuuid
 
- ``` python -m pip install *pip library*```
+``` python -m pip install *pip library*```
+ 
+# Run The File
+This script is meant to run in the background with no GUI and run at startup. Here are the steps to run the file in the background at startup for both Windows and Linux.
 
- ### Change Source Directory
- This is the directory that will be observed for changes. When a file is add / created here it will then trigger watchdog to see if the file needs to be sorted.
+To simply run the file,
+```python folder_manager.pyw```
 
- ```source_dest = "/Users/mrspe/Downloads/"```
+## Windows Setup
+To let make the file run at startup and in the background, I have provided a batch file .bat which needs to be placed inside of Windows startup shell. To do this follow these steps,
 
- Change this to your downloads folder
+```Ctrl + R```
 
- ### Change Destination Directories**
+Enter "*shell:startup*" inside and hit enter.
+
+Copy the **foldermanager.bat** file inside of this directory. The batch file will need adjusting as the directories will be different for everyone and where your computer holds the pythonw.exe and where you hold the script.
+
+The batch file,
+```
+start C:\msys64\mingw64\bin\python3w.exe "C:\Users\mrspe\Desktop\Local Github\Download-Folder-Python-Manager\folder_manager.pyw"
+```
+
+Change the first directory to the location of your pythonw.exe as we want python to run the file with no GUI, by default using the command "python" should recognize the .pyw file but it didn't in my case. The second directory is the location where you hold the folder_manager.py script.
+
+That's it on startup the file should run in the background and manage your downloads folder.
+
+## Linux Setup
+TO DO
+
+### Change Directories
+This is the directory that will be observed for changes. When a file is added / created here it will then trigger watchdog to see if the file needs to be sorted.
+Inside of *config.ini* there are various options to change **Source** and **Destination** directories.
+
+```
+[source]
+src = \Users\mrspe\Downloads\
+```
+
+Change **src** to your downloads folder
+
+Inside of **destination** there are 5 options for file types to sort, I will add more in the future but I created these to my needs.
 This is the directories where files will be sorted to. You can create as many as you wish with specific extensions that you require.
 
 ```
-dest_dir_image = "/Users/mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded Images/"
-dest_dir_video = "/Users\mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded Videos/"
-dest_dir_3dprint = "/Users/mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded STLs/"
-dest_dir_document = "/Users/mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded Documents/"
-dest_dir_music = "/Users/mrspe/OneDrive - Waterford Institute of Technology/Desktop/Downloaded Music/"
+[destination]
+images = \Users\mrspe\Desktop\Downloaded Images\
+videos = \Users\mrspe\Desktop\Downloaded Videos\
+3dprints = \Users\mrspe\Desktop\Downloaded STLs\
+documents = \Users\mrspe\Desktop\Downloaded Documents\
+music = \Users\mrspe\Desktop\Downloaded Music\
 ```
 
 ## Adding or changing directories and extension to filter
